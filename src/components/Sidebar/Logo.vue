@@ -1,25 +1,22 @@
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
+import { PropType, defineProps } from "vue";
 import { CashIcon } from "@heroicons/vue/outline";
-export default defineComponent({
-  components: {
-    CashIcon,
-  },
-  props: {
-      hideText: {
-          type: Boolean as PropType<boolean>,
-          default: () => false,
-      }
-  },
-  setup() {},
-});
+
+defineProps({
+  hideText: {
+    type: Boolean as PropType<boolean>,
+    default: () => false,
+  }
+})
+
 </script>
 
 <template>
-  <h1 class="logo"><CashIcon class="logo-icon" />
-  <span v-if="!hideText">
+  <h1 class="logo">
+    <CashIcon class="logo-icon" />
+    <span v-if="!hideText">
       Expense Bucket
-  </span>
+    </span>
   </h1>
 </template>
 
@@ -29,6 +26,7 @@ export default defineComponent({
   @apply flex items-center;
   @apply text-[#4E5FA5];
 }
+
 .logo-icon {
   @apply w-[50px] h-[50px] mr-1;
 }

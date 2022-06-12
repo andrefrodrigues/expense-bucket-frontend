@@ -1,50 +1,31 @@
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import { MenuIcon } from "@heroicons/vue/solid";
 import Menu from "./Menu.vue";
-import Logo from './Logo.vue';
+import Logo from "./Logo.vue";
 
-export default defineComponent({
-  components: {
-    MenuIcon,
-    Menu,
-    Logo
-  },
-  setup() {
-    const open = ref(false);
+const open = ref(false);
 
-    const toggle = () => {
-      open.value = !open.value;
-    };
-    return {
-      open,
-      toggle,
-    };
-  },
-});
+const toggle = () => {
+  open.value = !open.value;
+};
 </script>
+
 <template>
   <div class="relative h-full">
-    <MenuIcon
-      class="menu-button"
-      @click="toggle"
-    />
+    <MenuIcon class="menu-button" @click="toggle" />
     <div class="drawer" :class="{ 'drawer-open': open }">
-      <MenuIcon
-        class="menu-button"
-        @click="toggle"
-      />
-      <Logo/>
+      <MenuIcon class="menu-button" @click="toggle" />
+      <Logo />
       <Menu />
     </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
-
 .menu-button {
-    @apply h-8 w-8 absolute top-5 left-5;
-    @apply text-[#4E5FA5];
+  @apply h-8 w-8 absolute top-5 left-5;
+  @apply text-[#4E5FA5];
 }
 .drawer {
   @apply w-[250px];

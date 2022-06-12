@@ -1,12 +1,6 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import Sidebar from "./components/Sidebar/Sidebar.vue";
-export default defineComponent({
-  components: {
-    Sidebar,
-  },
-  setup() {},
-});
+
 </script>
 
 

@@ -1,15 +1,7 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import DesktopSidebar from './DesktopSidebar.vue';
 import MobileSidebar from './MobileSidebar.vue';
 
-export default defineComponent({
-  components: {
-    DesktopSidebar,
-    MobileSidebar
-  },
-  setup() {},
-});
 </script>
 
 <template>

@@ -1,30 +1,18 @@
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import Menu from "./Menu.vue";
 import { MenuIcon } from "@heroicons/vue/solid";
 import Logo from "./Logo.vue";
-export default defineComponent({
-  components: {
-    Menu,
-    MenuIcon,
-    Logo,
-  },
-  setup() {
-    const open = ref(true);
-    const toggle = () => {
-      open.value = !open.value;
-    };
-    return {
-      toggle,
-      open,
-    };
-  },
-});
+
+const open = ref(true);
+const toggle = () => {
+  open.value = !open.value;
+};
 </script>
 
 <template>
   <div class="sidebar" :class="{ 'sidebar-shrunk': !open }" @dblclick="toggle">
-    <Logo :hide-text="!open"/>
+    <Logo :hide-text="!open" />
     <Menu />
     <div
       class=""
