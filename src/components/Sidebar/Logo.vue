@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { PropType, defineProps } from "vue";
+import { defineProps } from "vue";
 import { CashIcon } from "@heroicons/vue/outline";
-
-defineProps({
-  hideText: {
-    type: Boolean as PropType<boolean>,
-    default: () => false,
-  }
-})
+interface Props {
+  hideText?: boolean;
+}
+const { hideText = false } = defineProps<Props>();
 
 </script>
 
@@ -22,6 +19,7 @@ defineProps({
 
 <style lang="postcss" scoped>
 .logo {
+  @apply px-4 pt-10;
   @apply text-lg font-bold;
   @apply flex items-center;
   @apply text-[#4E5FA5];

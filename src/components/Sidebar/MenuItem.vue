@@ -1,0 +1,27 @@
+<script setup lang="ts">
+import {defineProps} from 'vue';
+
+interface Props {
+  to: string;
+}
+
+defineProps<Props>();
+</script>
+
+<template>
+  <router-link class="menu-item" :to="to">
+    <slot/>
+  </router-link>
+</template>
+<style lang="postcss" scoped>
+.menu-item {
+  @apply pl-5 py-4;
+  @apply block;
+  @apply border-l-4;
+
+  @apply hover:bg-white;
+  @apply hover:border-[#4E5FA5];
+  @apply text-[#4E5FA5];
+  @apply font-bold;
+}
+</style>

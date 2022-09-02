@@ -1,10 +1,53 @@
 <script setup lang="ts">
+import MenuItem from './MenuItem.vue';
+import {HomeIcon, LoginIcon} from '@heroicons/vue/outline';
 
+
+export type MenuProps = {
+  open: boolean;
+}
+
+const props = defineProps<MenuProps>()
 </script>
 
 
 <template>
-    <div>
-        Menu is here
+  <div class="menu">
+    <div class="main-menu">
+      <MenuItem to="/">
+        <span class="menu-item-content">
+        <HomeIcon class="menu-icon" />
+          <span class="menu-label" v-if="open">Home</span>
+      </span>
+      </MenuItem>
     </div>
+    <div class="auth-menu">
+      <MenuItem to="/signup">
+        <span class="menu-item-content">
+          <LoginIcon class="menu-icon"/>
+          <span class="menu-label" v-if="open">Signup</span>
+        </span>
+      </MenuItem>
+    </div>
+  </div>
 </template>
+
+<style lang="postcss" scoped>
+.menu {
+  @apply flex flex-col justify-between;
+  @apply flex-1;
+  @apply mt-5;
+}
+
+.menu-icon {
+  @apply h-8 w-8;
+}
+
+.menu-label {
+  @apply mr-3;
+}
+
+.menu-item-content {
+  @apply flex items-center justify-start;
+}
+</style>
