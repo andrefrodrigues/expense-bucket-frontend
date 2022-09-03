@@ -7,6 +7,10 @@ import Button from '/src/components/Button.vue';
 import useValidate, { ValidationRuleCollection} from '@vuelidate/core';
 import {required, email, sameAs, maxLength, minLength} from '@vuelidate/validators';
 
+type FormProps = {
+  loading?: boolean;
+}
+const { loading = false } = defineProps<FormProps>();
 
 const emit = defineEmits(['submit']);
 

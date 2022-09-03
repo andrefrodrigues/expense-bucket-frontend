@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import MenuItem from './MenuItem.vue';
 import {HomeIcon, LoginIcon} from '@heroicons/vue/outline';
-import { defineEmits } from "vue";
 
 type MenuProps = {
   open: boolean;

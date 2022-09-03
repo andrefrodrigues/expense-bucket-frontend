@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import SignupForm, { FormFields } from './SignupForm.vue';
+import { useAuthStore,  } from "../../stores/auth";
 
+const store = useAuthStore();
 
 const onSubmit = (data: FormFields) => {
-    console.warn('not yet implemented');
-    console.log(data);
+    store.createNewAccount(data);
 };
 </script>
 
@@ -12,7 +13,7 @@ const onSubmit = (data: FormFields) => {
   <div class="signup-card">
     <h1 class="title">Sign up</h1>
     <p class="description">Create a new account</p>
-    <SignupForm @submit="onSubmit"/>
+    <SignupForm @submit="onSubmit" :loading="store.loading"/>
   </div>
 </template>
 <style lang="postcss" scoped>
