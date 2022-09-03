@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import { CashIcon } from "@heroicons/vue/outline";
-interface Props {
+type Props = {
   hideText?: boolean;
 }
 const { hideText = false } = defineProps<Props>();
@@ -11,7 +11,7 @@ const { hideText = false } = defineProps<Props>();
 <template>
   <h1 class="logo">
     <CashIcon class="logo-icon" />
-    <span v-if="!hideText">
+    <span v-if="!hideText" class="app-name">
       Expense Bucket
     </span>
   </h1>
@@ -26,6 +26,10 @@ const { hideText = false } = defineProps<Props>();
 }
 
 .logo-icon {
-  @apply w-[50px] h-[50px] mr-1;
+  @apply w-[50px] h-[50px];
+}
+
+.app-name {
+  @apply ml-2;
 }
 </style>

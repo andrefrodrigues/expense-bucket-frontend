@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import MenuItem from './MenuItem.vue';
 import {HomeIcon, LoginIcon} from '@heroicons/vue/outline';
+import { defineEmits } from "vue";
 
-
-export type MenuProps = {
+type MenuProps = {
   open: boolean;
 }
 
-const props = defineProps<MenuProps>()
+const { open = true } = defineProps<MenuProps>();
+
+const emit = defineEmits(['route-selected']);
+
+const selectRoute = (path: string) => {
+  emit('route-selected', path);
+}
 </script>
 
 
 <template>
   <div class="menu">
     <div class="main-menu">
-      <MenuItem to="/">
+      <MenuItem to="/"  @click="selectRoute('/')">
         <span class="menu-item-content">
         <HomeIcon class="menu-icon" />
           <span class="menu-label" v-if="open">Home</span>
@@ -22,8 +28,8 @@ const props = defineProps<MenuProps>()
       </MenuItem>
     </div>
     <div class="auth-menu">
-      <MenuItem to="/signup">
-        <span class="menu-item-content">
+      <MenuItem to="/signup" @click="selectRoute('/signup')">
+        <span class="menu-item-content" >
           <LoginIcon class="menu-icon"/>
           <span class="menu-label" v-if="open">Signup</span>
         </span>
@@ -40,11 +46,11 @@ const props = defineProps<MenuProps>()
 }
 
 .menu-icon {
-  @apply h-8 w-8;
+  @apply h-[32px] w-[32px];
 }
 
 .menu-label {
-  @apply mr-3;
+  @apply ml-2;
 }
 
 .menu-item-content {

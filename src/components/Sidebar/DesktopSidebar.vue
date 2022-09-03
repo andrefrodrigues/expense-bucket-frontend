@@ -33,11 +33,12 @@ const toggle = () => {
 }
 
 .footer {
-  @apply pl-4 pb-10 pr-6;
+  @apply pb-10;
 }
 
 .icon-container {
   @apply flex justify-end;
+  @apply pr-6;
 }
 
 .icon-container-shrunk {
@@ -45,7 +46,7 @@ const toggle = () => {
 }
 
 .menu-button {
-  @apply h-8 w-8;
+  @apply h-[32px] w-[32px];
   @apply text-[#4E5FA5];
   @apply cursor-pointer;
 }

@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import SignupCard from './SignupCard.vue';
 </script>
 <template>
-    <div>
-        Test
-    </div>
+    <section>
+        <SignupCard />
+    </section>
 </template>
+<style lang="postcss" scoped>
+</style>

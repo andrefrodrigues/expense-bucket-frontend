@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useRoute } from 'vue-router';
 import { MenuIcon } from "@heroicons/vue/solid";
 import Menu from "./Menu.vue";
 import Logo from "./Logo.vue";
+
+const route = useRoute();
 
 const open = ref(false);
 
 const toggle = () => {
   open.value = !open.value;
 };
+
+const closeSidebar = () => {
+  open.value = false;
+}
 </script>
 
 <template>
@@ -17,7 +24,7 @@ const toggle = () => {
     <div class="drawer" :class="{ 'drawer-open': open }">
       <MenuIcon class="menu-button" @click="toggle" />
       <Logo />
-      <Menu />
+      <Menu :open="open" @route-selected="closeSidebar"/>
     </div>
   </div>
 </template>
@@ -28,11 +35,12 @@ const toggle = () => {
   @apply text-[#4E5FA5];
 }
 .drawer {
+  @apply flex flex-col;
   @apply w-[250px];
   @apply left-[-250px];
   @apply shadow-lg;
-  @apply pl-6;
   @apply pt-20;
+  @apply pb-10;
   @apply h-full;
   @apply fixed;
   @apply z-10;

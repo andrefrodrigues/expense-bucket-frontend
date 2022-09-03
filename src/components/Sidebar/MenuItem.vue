@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {defineProps} from 'vue';
 
 interface Props {
   to: string;
@@ -15,9 +14,9 @@ defineProps<Props>();
 </template>
 <style lang="postcss" scoped>
 .menu-item {
-  @apply pl-5 py-4;
+  @apply px-4 py-4;
   @apply block;
-  @apply border-l-4;
+  @apply border-l-4 border-[#EDEFF6];
 
   @apply hover:bg-white;
   @apply hover:border-[#4E5FA5];

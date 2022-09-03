@@ -12,7 +12,7 @@ import Sidebar from "./components/Sidebar/Sidebar.vue";
   </div>
 </template>
 
-<style>
+<style lang="postcss">
 #app {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -21,7 +21,6 @@ import Sidebar from "./components/Sidebar/Sidebar.vue";
 
 .content {
   margin-top: 128px;
-  margin-left: 64px;
-  margin-right: 64px;
+  @apply mx-[32px] md:mx-[64px];
 }
 </style>
