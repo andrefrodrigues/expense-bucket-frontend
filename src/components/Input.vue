@@ -2,21 +2,19 @@
 
 type Props = {
   name: string;
-  type: string;
+  type?: string;
   placeholder: string;
   modelValue: string;
 }
-type Emits = {
-  (eventName: 'update', modelValue: string): void;
-}
 
-const emit = defineEmits<Emits>();
-const {type = 'text'} = defineProps<Props>();
+
+const emit = defineEmits(['update:modelValue']);
+const { type = 'text', placeholder, modelValue } = defineProps<Props>();
 
 </script>
 <template>
   <input :name="name" :placeholder="placeholder" :type="type" :value="modelValue"
-         @input="$emit('update:modelValue', $event.target.value)"/>
+         @input="emit('update:modelValue', $event.target.value)"/>
 </template>
 
 
