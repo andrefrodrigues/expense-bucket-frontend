@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MenuItem from './MenuItem.vue';
-import {HomeIcon, LoginIcon} from '@heroicons/vue/outline';
+import { HomeIcon, UserAddIcon, LoginIcon } from '@heroicons/vue/outline';
 
 type MenuProps = {
   open: boolean;
@@ -29,8 +29,14 @@ const selectRoute = (path: string) => {
     <div class="auth-menu">
       <MenuItem to="/signup" @click="selectRoute('/signup')">
         <span class="menu-item-content" >
-          <LoginIcon class="menu-icon"/>
+          <UserAddIcon class="menu-icon"/>
           <span class="menu-label" v-if="open">Signup</span>
+        </span>
+      </MenuItem>
+      <MenuItem to="/login" @click="selectRoute('/login')">
+        <span class="menu-item-content" >
+          <LoginIcon class="menu-icon"/>
+          <span class="menu-label" v-if="open">Login</span>
         </span>
       </MenuItem>
     </div>
