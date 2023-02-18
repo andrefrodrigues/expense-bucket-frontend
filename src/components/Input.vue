@@ -5,16 +5,17 @@ type Props = {
   type?: string;
   placeholder: string;
   modelValue: string;
+  error?: boolean;
 }
 
 
 const emit = defineEmits(['update:modelValue']);
-const { type = 'text', placeholder, modelValue } = defineProps<Props>();
+const { type = 'text', placeholder, modelValue, error = false } = defineProps<Props>();
 
 </script>
 <template>
-  <input :name="name" :placeholder="placeholder" :type="type" :value="modelValue"
-         @input="emit('update:modelValue', $event.target.value)"/>
+  <input  :name="name" :placeholder="placeholder" :type="type" :value="modelValue"
+         @input="emit('update:modelValue', $event.target.value)" :class="{'error': error}"/>
 </template>
 
 
@@ -26,5 +27,9 @@ input {
   @apply rounded-md;
   @apply focus:border-[#4E5FA5];
   @apply outline-0;
+}
+
+.error {
+  @apply border border-red-600;
 }
 </style>

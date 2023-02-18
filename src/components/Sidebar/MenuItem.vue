@@ -23,4 +23,9 @@ defineProps<Props>();
   @apply text-[#4E5FA5];
   @apply font-bold;
 }
+
+.router-link-active {
+  @apply bg-white;
+  @apply border-[#4E5FA5];
+}
 </style>

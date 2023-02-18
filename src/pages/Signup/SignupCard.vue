@@ -1,19 +1,28 @@
 <script setup lang="ts">
-import SignupForm, { FormFields } from './SignupForm.vue';
-import { useAuthStore,  } from "../../stores/auth";
+import SignupForm from './SignupForm.vue';
+import { useAuthStore } from "../../stores/auth";
+import { storeToRefs } from 'pinia';
+import { FormFields } from './types';
 
 const store = useAuthStore();
-
+const { loading, errorMessage } = storeToRefs(store);
 const onSubmit = (data: FormFields) => {
     store.createNewAccount(data);
 };
+
+const onReset = () => {
+  store.cleanError();
+}
 </script>
 
 <template>
   <div class="signup-card">
     <h1 class="title">Sign up</h1>
     <p class="description">Create a new account</p>
-    <SignupForm @submit="onSubmit" :loading="store.loading"/>
+    <p class="error-message"><span v-if="errorMessage && !loading">{{ errorMessage }}</span></p>
+    <div class="form-wrapper">
+      <SignupForm @submit="onSubmit" :loading="loading" @reset="onReset"/>
+    </div>
   </div>
 </template>
 <style lang="postcss" scoped>
@@ -33,5 +42,18 @@ const onSubmit = (data: FormFields) => {
     @apply pl-6;
     @apply text-xl;
     @apply mt-2;
+  }
+
+  .error-message {
+    @apply text-sm;
+    @apply text-red-600;
+    @apply text-center;
+    text-transform: capitalize;
+    @apply h-[20px];
+    @apply mt-1;
+  }
+
+  .form-wrapper {
+    @apply -mt-4;
   }
 </style>

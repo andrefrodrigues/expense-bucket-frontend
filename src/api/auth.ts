@@ -1,4 +1,4 @@
-
+import { ApiError } from './types';
 
 export type SignupData = {
     name: string;
@@ -13,7 +13,7 @@ type SignupSuccessResponse = {
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
-export const signup = async (data: SignupData): Promise<string> => {
+export const signup = async (data: SignupData): Promise<string | ApiError | undefined> => {
     try {
         const rawResponse = await fetch(`${baseUrl}/v1/signup`, {
             headers: {
@@ -21,16 +21,15 @@ export const signup = async (data: SignupData): Promise<string> => {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
+            mode: 'cors',
             body: JSON.stringify(data),
         });
 
-        const content: SignupSuccessResponse | string = await rawResponse.json();
-
+        const content: SignupSuccessResponse | ApiError = await rawResponse.json();
         if(rawResponse.status === 200) {
             return (content as SignupSuccessResponse).token;
         }
-
-        return content as string;
+        return content as ApiError;
     } catch(err) {
         console.error(err);
     }

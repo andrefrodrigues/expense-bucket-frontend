@@ -20,7 +20,7 @@ import Sidebar from "./components/Sidebar/Sidebar.vue";
 }
 
 .content {
-  margin-top: 128px;
+  margin-top: 64px;
   @apply mx-[32px] md:mx-[64px];
 }
 </style>
