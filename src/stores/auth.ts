@@ -75,7 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
             return true;
         }
         setErrorMessage(response);
-        return true;
+        return false;
     };
     const logout = () => {
         userToken.value = null;
