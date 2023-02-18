@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
         errorMessage.value = errorMessageCodeMap[code] || message;
     };
 
-    const createNewAccount = async (data: AccountPayload) => {
+    const createNewAccount = async (data: AccountPayload): boolean => {
         loading.value = true;
         const response = await signup({
             name: data.name,
@@ -38,12 +38,15 @@ export const useAuthStore = defineStore('auth', () => {
         });
         loading.value = false;
         if (!response) {
-            return;
+            errorMessage.value = 'Error';
+            return false;
         }
         if (typeof response === 'string') {
-            return userToken.value = response;
+            userToken.value = response;
+            return true;
         }
         setErrorMessage(response);
+        return false;
     };
 
     const cleanError = () => {

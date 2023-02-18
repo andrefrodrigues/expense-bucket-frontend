@@ -3,11 +3,16 @@ import SignupForm from './SignupForm.vue';
 import { useAuthStore } from "../../stores/auth";
 import { storeToRefs } from 'pinia';
 import { FormFields } from './types';
+import { useRouter } from 'vue-router';
 
 const store = useAuthStore();
 const { loading, errorMessage } = storeToRefs(store);
+const router = useRouter();
 const onSubmit = (data: FormFields) => {
-    store.createNewAccount(data);
+    const success = store.createNewAccount(data);
+    if (success) {
+      router.push({ path: '/'});
+    }
 };
 
 const onReset = () => {
