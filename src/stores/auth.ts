@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { signup, signin } from '../api/auth';
-import { ref, computed } from "vue";
+import { getToken, storeToken } from '../api/local-storage';
+import { ref, computed, onMounted } from "vue";
 import { ApiError } from '../api/types';
 import { useUserStore } from './user';
 
@@ -51,6 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
         if (typeof response === 'string') {
             userToken.value = response;
             userStore.fetchUser(userToken.value);
+            storeToken(userToken.value);
             return true;
         }
         setErrorMessage(response);
@@ -72,14 +74,25 @@ export const useAuthStore = defineStore('auth', () => {
         if (typeof response === 'string') {
             userToken.value = response;
             userStore.fetchUser(userToken.value);
+            storeToken(userToken.value);
             return true;
         }
         setErrorMessage(response);
         return false;
     };
+
     const logout = () => {
         userToken.value = null;
         userStore.cleanUser();
     }
+
+    const loadDataFromLocalStorage = () => {
+        const token = getToken();
+        if (token) {
+            userToken.value;
+            userStore.fetchUser(token);
+        }
+    }
+    onMounted(loadDataFromLocalStorage)
     return { loading, createNewAccount, userToken, isLoggedIn, errorMessage, cleanError, login, logout };
 });
