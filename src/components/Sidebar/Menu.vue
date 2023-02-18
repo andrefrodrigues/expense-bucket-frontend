@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import MenuItem from './MenuItem.vue';
-import { HomeIcon, UserAddIcon, LoginIcon } from '@heroicons/vue/outline';
+import { HomeIcon, UserAddIcon, LoginIcon, LogoutIcon  } from '@heroicons/vue/outline';
+import { useUserStore } from '../../stores/user';
+import { useAuthStore } from '../../stores/auth';
+import { storeToRefs } from 'pinia';
 
 type MenuProps = {
   open: boolean;
 }
-
+const userStore = useUserStore();
+const authStore = useAuthStore();
+const { isLoggedIn } = storeToRefs(userStore);
 const { open = true } = defineProps<MenuProps>();
 
 const emit = defineEmits(['route-selected']);
@@ -13,9 +18,13 @@ const emit = defineEmits(['route-selected']);
 const selectRoute = (path: string) => {
   emit('route-selected', path);
 }
+
+const onLogout = () => {
+  authStore.logout();
+  emit('route-selected', '/');
+};
+
 </script>
-
-
 <template>
   <div class="menu">
     <div class="main-menu">
@@ -27,16 +36,22 @@ const selectRoute = (path: string) => {
       </MenuItem>
     </div>
     <div class="auth-menu">
-      <MenuItem to="/signup" @click="selectRoute('/signup')">
+      <MenuItem v-if="!isLoggedIn" to="/signup" @click="selectRoute('/signup')">
         <span class="menu-item-content" >
           <UserAddIcon class="menu-icon"/>
           <span class="menu-label" v-if="open">Signup</span>
         </span>
       </MenuItem>
-      <MenuItem to="/login" @click="selectRoute('/login')">
+      <MenuItem v-if="!isLoggedIn" to="/login" @click="selectRoute('/login')">
         <span class="menu-item-content" >
           <LoginIcon class="menu-icon"/>
           <span class="menu-label" v-if="open">Login</span>
+        </span>
+      </MenuItem>
+      <MenuItem v-if="isLoggedIn" @click="onLogout">
+        <span class="menu-item-content" >
+          <LogoutIcon class="menu-icon"/>
+          <span class="menu-label" v-if="open">Logout</span>
         </span>
       </MenuItem>
     </div>

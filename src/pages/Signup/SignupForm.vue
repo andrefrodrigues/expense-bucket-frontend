@@ -12,7 +12,7 @@ type FormProps = {
 }
 const { loading = false } = defineProps<FormProps>();
 
-const emit = defineEmits(['submit', 'reset']);
+const emit = defineEmits(['submit']);
 
 type FormRules = {
   name: ValidationRuleCollection;

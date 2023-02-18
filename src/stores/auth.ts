@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-import { signup } from '../api/auth';
-import {ref, computed } from "vue";
+import { signup, signin } from '../api/auth';
+import { ref, computed } from "vue";
 import { ApiError } from '../api/types';
+import { useUserStore } from './user';
 
 export type AccountPayload = {
     name: string;
@@ -10,25 +11,31 @@ export type AccountPayload = {
     passwordConfirmation: string;
 }
 
+export type LoginPayload = {
+    email: string;
+    password: string;
+}
+
 type MessageCodeMap = {
     [key: number]: string;
 }
 
 const errorMessageCodeMap: MessageCodeMap = {
-    1: 'User already exists'
+    1: 'User already exists',
+    2: 'Invalid username or password'
 }
 
 export const useAuthStore = defineStore('auth', () => {
-    const userToken = ref<string | null>('');
+    const userToken = ref<string | null>(null);
     const loading = ref(false);
     const errorMessage = ref<string>('');
-    const isLoggedIn = computed(()=> userToken.value !== null && userToken.value !== '');
+    const isLoggedIn = computed(() => userToken.value !== null && userToken.value !== '');
+    const userStore = useUserStore();
 
-    const setErrorMessage = ({message, code }: ApiError) => {
+    const setErrorMessage = ({ message, code }: ApiError) => {
         errorMessage.value = errorMessageCodeMap[code] || message;
     };
-
-    const createNewAccount = async (data: AccountPayload): boolean => {
+    const createNewAccount = async (data: AccountPayload): Promise<boolean> => {
         loading.value = true;
         const response = await signup({
             name: data.name,
@@ -43,6 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
         if (typeof response === 'string') {
             userToken.value = response;
+            userStore.fetchUser(userToken.value);
             return true;
         }
         setErrorMessage(response);
@@ -51,6 +59,27 @@ export const useAuthStore = defineStore('auth', () => {
 
     const cleanError = () => {
         errorMessage.value = '';
+    };
+
+    const login = async ({ email, password }: LoginPayload): Promise<boolean> => {
+        loading.value = true;
+        const response = await signin({ email, password });
+        loading.value = false;
+        if (!response) {
+            errorMessage.value = 'Error';
+            return false;
+        }
+        if (typeof response === 'string') {
+            userToken.value = response;
+            userStore.fetchUser(userToken.value);
+            return true;
+        }
+        setErrorMessage(response);
+        return true;
+    };
+    const logout = () => {
+        userToken.value = null;
+        userStore.cleanUser();
     }
-    return { loading, createNewAccount, userToken, isLoggedIn, errorMessage, cleanError };
+    return { loading, createNewAccount, userToken, isLoggedIn, errorMessage, cleanError, login, logout };
 });
